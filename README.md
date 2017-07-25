@@ -3,7 +3,7 @@ Recipes for Service Integration authentications via the OAuth JWT flow.
 
 ## Information Security
 Note! In the following sections we will be updating files to include
-data that must be secured: your applicaton's integration key, its secret, and
+data that must be secured: your applicaton's integration key, and
 its private key. Safeguard this information appropriately!
 
 ## Service Integrations and the OAuth JWT flow
@@ -37,8 +37,7 @@ represent the apps themselves.
 
 ### Configuring an Integration Key for the OAuth JWT flow
 
-The app's integration key must have a public/private keypair and
-a secret configured:
+The app's integration key must have a public/private keypair configured:
 
 1. Goto the DocuSign Administrator Tool (New DocuSign Signing Experience)
 1. Open the INTEGRATIONS / API and Keys screen
@@ -50,10 +49,6 @@ a secret configured:
    1. Redirect URIs: add `https://docusign.com` as a redirect uri.
       This is a placeholder uri, it will only be used when we
       ask users to authorize our application.
-   1. Secret Keys: click to create a secret key. Then immediately copy it to a secure location.
-
-      This is the only time DocuSign will show you this secret key in cleartext.
-      You can generate new secret keys as needed.
    1. RSA Keypairs: Click to create a keypair. Then copy the public and private keys to two
       different files in a secure directory. Store the Keypair ID too, you can use it to
       identify the keypair. Eg if you later want to delete a specific keypair.
@@ -81,7 +76,7 @@ iat | Issued At | Not used by DocuSign.
 jti | JWT ID | Not used by DocuSign.
 
 Your JWT token generator library will also need your integration key's
-*secret* and the *private key* that you downloaded from DocuSign.
+*private key* certificate that you downloaded from DocuSign.
 
 #### Obtain the user_id
 The JWT token includes the user_id of the user who will be impersonated
