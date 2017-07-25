@@ -40,7 +40,7 @@ represent the apps themselves.
 The app's integration key must have a public/private keypair and
 a secret configured:
 
-1. Goto the DocuSign Administrator Tool
+1. Goto the DocuSign Administrator Tool (New DocuSign Signing Experience)
 1. Open the INTEGRATIONS / API and Keys screen
 1. Create a new Integration Key as follows:
    1. App Description: JWT Test
