@@ -1,0 +1,6 @@
+{
+    "require": {
+        "firebase/php-jwt": "^5.0",
+        "mashape/unirest-php": "^3.0"
+    }
+}
