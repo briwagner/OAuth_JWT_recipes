@@ -18,8 +18,6 @@
 #
 
 # Fill in the following variables:
-# The Integration key's secret:
-SECRET="[secret]"
 # Claim items:
 # SUB (subscriber) is the user_id of the login that will be impersonated.
 # It can be yourself, a "system user", or it can vary (Send on behalf of use case):
@@ -73,10 +71,9 @@ PY_ENSURE_ACCESS_TOKEN="j['access_token'] = 'False' if 'access_token' not in j e
 
 #printf "Create the JWT:\n"
 JWT=$(jwtgen --algorithm $ALG \
-  --secret $SECRET \
   --private $PRIVATE_KEY_FILE \
   --claims $CLAIMS \
-  --exp $EXP ) # The jwtgen generator uses the current time as the JWT's
+  --exp $EXP ) # The jwtgen generator uses the current time as the JWT's nbf value
 #printf "JWT: %s\n" "$JWT"
 
 printf "Requesting an access token by using a JWT token..."
