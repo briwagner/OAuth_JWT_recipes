@@ -64,7 +64,7 @@ PY_ENSURE_ACCESS_TOKEN="j['access_token'] = 'False' if 'access_token' not in j e
 # "sub" (Subject) Claim . . . . . . . the user's user_id
 # "aud" (Audience) Claim  . . . . . . The authentication server address.
 #                                     Either account.docusign.com or account-d.docusign.com
-# "exp" (Expiration Time) Claim . . . Seconds validity. DocuSign max is 3600
+# "exp" (Expiration Time) Claim . . . DocuSign max is 3600 sec past nbf
 # "nbf" (Not Before) Claim  . . . . . Current date/time
 # "iat" (Issued At) Claim . . . . . . Not used by DocuSign
 # "jti" (JWT ID) Claim  . . . . . . . Not used by DocuSign
