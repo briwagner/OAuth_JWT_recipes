@@ -5,7 +5,7 @@ Php and command line examples are included in this repo.
 
 ## Information Security
 Note! In the following sections we will be updating files to include
-data that must be secured: your applicaton's integration key, and
+data that must be secured: your application's integration key, and
 its private key. Safeguard this information appropriately!
 
 ## Service Integrations and the OAuth JWT flow
