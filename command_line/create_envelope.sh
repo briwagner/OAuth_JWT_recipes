@@ -68,6 +68,10 @@ PY_ENSURE_ACCESS_TOKEN="j['access_token'] = 'False' if 'access_token' not in j e
 # "nbf" (Not Before) Claim  . . . . . Current date/time
 # "iat" (Issued At) Claim . . . . . . Not used by DocuSign
 # "jti" (JWT ID) Claim  . . . . . . . Not used by DocuSign
+# "scope" . . . . . . . . . . . . . . A list of space delimited scopes
+#                                     requested in this token
+#                                     (e.g. signature).
+# Note: scope is a JWT private claim name used by DocuSign.
 
 #printf "Create the JWT:\n"
 JWT=$(jwtgen --algorithm $ALG \

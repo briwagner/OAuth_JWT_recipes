@@ -76,6 +76,9 @@ nbf | Not Before | Current date/time as seconds since the Unix Epoch.<br/>The va
 exp | Expiration Time | DocuSign max is the `nbf` value plus 3600 seconds.
 iat | Issued At | Not used by DocuSign.
 jti | JWT ID | Not used by DocuSign.
+scope | scope | A list of space delimited scopes requested in this token (e.g. `signature`).
+
+Note: `scope` is a JWT private claim name used by DocuSign.
 
 Your JWT token generator library will also need your integration key's
 *private key* certificate that you downloaded from DocuSign.

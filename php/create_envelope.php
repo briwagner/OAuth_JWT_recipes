@@ -52,6 +52,10 @@ $grant_type="urn:ietf:params:oauth:grant-type:jwt-bearer";
 // "nbf" (Not Before) Claim  . . . . . Current date/time
 // "iat" (Issued At) Claim . . . . . . Not used by DocuSign
 // "jti" (JWT ID) Claim  . . . . . . . Not used by DocuSign
+// "scope" . . . . . . . . . . . . . . A list of space delimited scopes
+//                                     requested in this token
+//                                    (e.g. signature).
+// Note: scope is a JWT private claim name used by DocuSign.
 
 $current_time = time ();
 $token = array(
