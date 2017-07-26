@@ -16,10 +16,9 @@ require_once 'vendor/autoload.php'; # http://unirest.io/php.html
 //  1. Open the USERS AND GROUPS/Users screen
 //  2. Edit the user
 //  3. The field "API Username" is the user's user_id
-// User email: sue@example.com     // this is a note.
-$sub="[user_id]"; // user's user_id
+$sub="[user_id]"; // user's user_id -- email: sue@example.com
 // Integrator key (client_id)
-$iss="[client_id]";
+$iss="[integration key]";
 // The authentication server address. Either account.docusign.com or account-d.docusign.com
 $aud="account-d.docusign.com";
 // A redirect URI registered for the Integration Key. https://docusign.com is suggested
@@ -42,10 +41,6 @@ $exp=3600;
 $token_url="https://{$aud}/oauth/token";
 // Grant type is constant
 $grant_type="urn:ietf:params:oauth:grant-type:jwt-bearer";
-
-// PY_PREAMBLE="import sys, json; j=json.load(sys.stdin);"
-// PY_ENSURE_ERROR="j['error'] = 'False' if 'error' not in j else j['error'];"
-// PY_ENSURE_ACCESS_TOKEN="j['access_token'] = 'False' if 'access_token' not in j else j['access_token'];"
 
 // JWT Standard docs: https://tools.ietf.org/html/rfc7519
 // The standard JWT claim items and their use by DocuSign
@@ -77,106 +72,121 @@ $data = array('grant_type' => $grant_type, 'assertion' => $jwt);
 $body = Unirest\Request\Body::form($data);
 $response = Unirest\Request::post($token_url, $headers, $body);
 
-printf ("done.\nResponse: %s\n", $response->raw_body);
+printf ("done.\nResponse: %s\n\n", $response->raw_body);
 printf ("Checking the response...");
 
-// // Handle the response if there's a problem with the curl request
-// if grep -q "Bad Request" <<<"$TOKEN_RESPONSE"; then
-//     printf 'The DocuSign Authentication server returned "Bad Request."\n'
-//     printf "Check that your JWT parameters are correct.\n"
-//     exit 1
-// fi
-//
-// // Handle the response if it is an html page
-// if grep -q "<html>" <<<"$TOKEN_RESPONSE"; then
-//     printf "Error response:\n%s\n" "$TOKEN_RESPONSE"
-//     exit 1
-// fi
-//
-// // First time for a user: you will receive error return. Eg {"error":"consent_required"}
-// // In that case, the user needs to explicitly approve access to their credentials.
-// // Use an OAuth Authorization Code flow to accomplish this. The return_uri must be
-// // set for the client_id (Integration key) but you do NOT need an app at that location.
-// // Eg. You can use https://docusign.com as the return_uri if you wish.
-// CONSENT_REQ=`echo $TOKEN_RESPONSE|python -c "$PY_PREAMBLE $PY_ENSURE_ERROR print j['error']=='consent_required'"`
-// if [ "$CONSENT_REQ" == 'True' ]; then
-//   CONSENT_URL="https://"$AUD"/oauth/auth?response_type=code&scope="$PERMISSION_SCOPES"&client_id="$ISS"&redirect_uri="$REDIRECT_URI
-//   printf "\n\nC O N S E N T   R E Q U I R E D\n"
-//   printf "Ask the user who will be impersonated to run the following url:\n"
-//   printf "    %s\n" $CONSENT_URL
-//   printf "It will ask the user to login and to approve access by your application.\n\n"
-//   exit 1
-// fi
-//
-// TOKEN_ERR=`echo $TOKEN_RESPONSE|python -c "$PY_PREAMBLE $PY_ENSURE_ERROR print j['error']"`
-// if [ "$TOKEN_ERR" == 'True' ]; then
-//   printf "\n\nUnexpected error\n"
-//   printf "%s\n" $TOKEN_ERR
-//   exit 1
-// fi
-//
-// ACCESS_TOKEN=`echo $TOKEN_RESPONSE|python -c "$PY_PREAMBLE $PY_ENSURE_ACCESS_TOKEN print j['access_token']"`
-// if [ "$ACCESS_TOKEN" != 'False' ]; then
-//   printf "received access_token!"
-//   EXPIRES=`echo $TOKEN_RESPONSE|python -c "$PY_PREAMBLE $PY_ENSURE_ACCESS_TOKEN print j['expires_in']"`
-//   printf " Expires in %s seconds.\n" "$EXPIRES"
-// else
-//   printf "\n\nUnexpected problem. DocuSign response:\n"
-//   printf "%s\n" $TOKEN_RESPONSE
-//   exit 1
-// fi
-//
-// USER_INFO="/oauth/userinfo"
-// // Get login information
-// printf "Using /oauth/userinfo to fetching user information..."
-// USERINFO=`curl -s -H "Authorization: Bearer "$ACCESS_TOKEN "https://"$AUD$USER_INFO`
-// printf "done. Results:\n"
-//
-// // pretty print the response
-// PP=`echo $USERINFO|python -c "$PY_PREAMBLE print json.dumps(j,sort_keys=True,indent=4,separators=(',',': '))"`
-// printf "%s\n" "$PP"
-//
-// // Process the response
-// printf "\nUsing the first account\n"
-// ACCNT_NAME=`echo $USERINFO|python -c "$PY_PREAMBLE print j['accounts'][0]['account_name']"`
-// ACCNT_ID=`echo $USERINFO|python -c "$PY_PREAMBLE print j['accounts'][0]['account_id']"`
-// ACCNT_BASE_URL=`echo $USERINFO|python -c "$PY_PREAMBLE print j['accounts'][0]['base_uri']"`
-// printf "Account name: %s\n" "$ACCNT_NAME"
-// printf "Account ID: %s\n" "$ACCNT_ID"
-// printf "Base URL: %s\n" "$ACCNT_BASE_URL"
-//
-// // Send the envelope
-// DOC="simple_agreement.html"
-// STEP1_REQ="create_envelope.json"
-// DOC_BASE64="doc.base64"
-// PAYLOAD="payload.json"
-// base64 $DOC -o "$DOC_BASE64" // base64 encode the doc
-// // insert the doc into the json file to create the payload file...
-// sed -e "s/FILE1_BASE64/$(sed 's:/:\\/:g' $DOC_BASE64)/" $STEP1_REQ > "$PAYLOAD"
-// printf "Creating the envelope..."
-// ENV_RESULTS=`curl -s -X POST -d @${PAYLOAD} \
-//   -H "Accept: application/json" \
-//   -H "Content-Type: application/json" \
-//   -H "Authorization: Bearer "$ACCESS_TOKEN \
-//   $ACCNT_BASE_URL/restapi/v2/accounts/$ACCNT_ID/envelopes`
-// printf "done.\n"
-// ENVELOPE_ID=`echo $ENV_RESULTS|python -c "$PY_PREAMBLE print j['envelopeId']"`
-//
-// // Get the recipient view URL
-// printf "Envelope ID: %s\n" "$ENVELOPE_ID"
-// NAME="Jackie Williams"  // Same as in create_envelope.json
-// EMAIL="jackie@foo.com"  // Same as in create_envelope.json
-// CLIENT_USER_ID="100"    // Same as in create_envelope.json
-// VIEW_PAYLOAD='{"clientUserId":"'$CLIENT_USER_ID'","email":"'$EMAIL'","userName":"'$NAME'","returnUrl": "'$REDIRECT_URI'","AuthenticationMethod": "Password"}'
-// printf "Fetching recipient view url..."
-// VW_RESULTS=`curl -s -X POST -d "$VIEW_PAYLOAD" \
-//   -H "Accept: application/json" \
-//   -H "Content-Type: application/json" \
-//   -H "Authorization: Bearer "$ACCESS_TOKEN \
-//   $ACCNT_BASE_URL/restapi/v2/accounts/$ACCNT_ID/envelopes/$ENVELOPE_ID/views/recipient`
-// VIEW_URL=`echo $VW_RESULTS|python -c "$PY_PREAMBLE print j['url']"`
-// printf "\nUse this URL to sign the envelope:\n     %s\n\n\nDone.\n" "$VIEW_URL"
-//
-//
-// exit 0
-//
+// Handle the response if it is an html page
+if (strpos($response->raw_body, '<html>') !== false) {
+    printf ("An error response was received!\n\n");
+    exit (1);
+}
+
+// First time for a user: you will receive error return. Eg {"error":"consent_required"}
+// In that case, the user needs to explicitly approve access to their credentials.
+// Use an OAuth Authorization Code flow to accomplish this. The return_uri must be
+// set for the client_id (Integration key) but you do NOT need an app at that location.
+// Eg. You can use https://docusign.com as the return_uri if you wish.
+$json = $response->body;
+if (property_exists ($json, 'error') and $json->{'error'} == 'consent_required' ){
+    $consent_url = "https://{$aud}/oauth/auth?response_type=code&scope={$permission_scopes}&client_id={$iss}&redirect_uri={$redirect_uri}";
+    printf ("\n\nC O N S E N T   R E Q U I R E D\n");
+    printf ("Ask the user who will be impersonated to run the following url:\n");
+    printf ("    %s\n", $consent_url);
+    printf ("It will ask the user to login and to approve access by your application.\n\n");
+    exit (1);
+}
+
+// Check for some other error
+if (property_exists ($json, 'error') or !property_exists ($json, 'access_token')){
+   printf ("\n\nUnexpected error: {$json->{'error'}}\n\n");
+   exit (1);
+}
+
+$access_token = $json->{'access_token'};
+printf ("received access_token!");
+$expires = $json->{'expires_in'};
+printf (" Expires in %s seconds.\n", $expires);
+
+// Get user information
+$user_info_url="https://{$aud}/oauth/userinfo";
+printf ("Using /oauth/userinfo to fetch user information...");
+$headers = array('Accept' => 'application/json', 'Authorization' => "Bearer {$access_token}");
+$response = Unirest\Request::get($user_info_url, $headers);
+printf ("done. Results:\n");
+$json = $response->body;
+
+// pretty print the response
+$pp = json_encode($json, JSON_PRETTY_PRINT);
+$pp = str_replace ( '\/' , '/' , $pp );
+printf ("%s\n", $pp); //  Don't escape slashes
+
+// Process the response
+printf ("\nUsing the first account\n");
+$a_name     = $json->{'accounts'}[0]->{'account_name'};
+$a_id       = $json->{'accounts'}[0]->{'account_id'};
+$a_base_url = $json->{'accounts'}[0]->{'base_uri'};
+printf ("Account name: %s\n", $a_name);
+printf ("Account ID: %s\n", $a_id);
+printf ("Base URL: %s\n", $a_base_url);
+
+// Send the envelope
+$doc = "simple_agreement.html";
+$payload_file = "create_envelope.json";
+
+//$payload = (object) [
+//    'aString' => 'some string',
+//    'anArray' => [ 1, 2, 3 ]
+//];
+
+$payload = json_decode(file_get_contents($payload_file));
+$payload->{'documents'}[0]->{'documentBase64'} = base64_encode(file_get_contents($doc));
+//echo ( json_encode($payload, JSON_PRETTY_PRINT));
+
+printf ("Creating the envelope...");
+$headers = array('Accept' => 'application/json',
+                 'Authorization' => "Bearer {$access_token}",
+                 'Content-Type' => 'application/json');
+$body = Unirest\Request\Body::json($payload);
+$response = Unirest\Request::post("{$a_base_url}/restapi/v2/accounts/{$a_id}/envelopes", $headers, $body);
+printf ("done.\n");
+$json = $response->body;
+
+if (property_exists ($json, 'errorCode')){
+  printf("Error:\n%s\n", json_encode($json, JSON_PRETTY_PRINT));
+  exit (1);
+}
+
+$env_id = $json->{'envelopeId'};
+
+// Get the recipient view URL
+printf ("Envelope ID: %s\n", $env_id);
+$name =  "Jackie Williams";  // Same as in create_envelope.json
+$email = "jackie@foo.com";   // Same as in create_envelope.json
+$client_user_id = "100";     // Same as in create_envelope.json
+
+$payload = (object) [
+   'clientUserId' => $client_user_id,
+   'email' => $email,
+   'userName' => $name,
+   'returnUrl' => $redirect_uri,
+   'AuthenticationMethod' => 'Password'
+];
+
+printf ("Fetching the Signing Ceremony URL...");
+$headers = array('Accept' => 'application/json',
+                 'Authorization' => "Bearer {$access_token}",
+                 'Content-Type' => 'application/json');
+$body = Unirest\Request\Body::json($payload);
+$response = Unirest\Request::post("{$a_base_url}/restapi/v2/accounts/{$a_id}/envelopes/{$env_id}/views/recipient", $headers, $body);
+printf ("done.\n");
+$json = $response->body;
+
+if (property_exists ($json, 'errorCode')){
+  printf("Error:\n%s\n", json_encode($json, JSON_PRETTY_PRINT));
+  exit (1);
+}
+
+$view_url = $json->{'url'};
+printf ("\nUse this URL to sign the envelope:\n     %s\n\n\nDone.\n", $view_url);
+
+exit (0);

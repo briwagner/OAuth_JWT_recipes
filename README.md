@@ -1,6 +1,8 @@
 # OAuth_JWT_recipes
 Recipes for Service Integration authentications via the OAuth JWT flow.
 
+Php and command line examples are included in this repo.
+
 ## Information Security
 Note! In the following sections we will be updating files to include
 data that must be secured: your applicaton's integration key, and
@@ -70,8 +72,8 @@ alg | Algorithm | DocuSign only uses the `RS256` algorithm.
 iss | Issuer | client_id (Integration Key).
 sub | Subject | The user's user_id.
 aud | Audience | The authentication server address. Either `account.docusign.com` or `account-d.docusign.com`. Do not include https://
-exp | Expiration Time (sec) | DocuSign max is 3600 seconds.
-nbf | Not Before | Current date/time (usually set by the jwt library).
+nbf | Not Before | Current date/time as seconds since the Unix Epoch.<br/>The value may be set by the jwt library.
+exp | Expiration Time | DocuSign max is the `nbf` value plus 3600 seconds.
 iat | Issued At | Not used by DocuSign.
 jti | JWT ID | Not used by DocuSign.
 
@@ -189,7 +191,21 @@ grant consent to your app.
 In this case, the individual users do not have to take
 any action for the app to act on their behalf.
 
-## Command Line JWT Recipe
+## PHP JWT recipe
+
+The **php** directory includes a PHP JWT example.
+
+The recipe is designed to be used from the command line, not as
+a web script. No web server is needed to try the script.
+
+* Update the files in **/keys** with your private and public key files.
+* Update the **create_envelope.php** file with your client_id and user_id.
+
+Run the file from a shell:
+
+**% php create_envelope.php**
+
+## Command Line JWT recipe
 
 The following sections discuss how to install and test
 the command line JWT recipe. Its files are in directory
@@ -231,7 +247,8 @@ Remember that the **user who is being impersonated** needs to use the url to log
 DocuSign and grant permission for your app to use his credentials.
 
 ### Colophon
-This script has been tested on a Macintosh. Pull requests are welcomed.
-All software supplied by a pull request must be licensed under the MIT License.
+The command_line script has been tested on a Macintosh using a bash shell. Pull requests are welcomed.
+
+All software supplied by pull requests must be licensed under the MIT License.
 
 [1]:https://docs.docusign.com/esign/guide/authentication/oa2_auth_code.html
