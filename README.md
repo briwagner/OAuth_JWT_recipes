@@ -159,7 +159,7 @@ permissions (scopes) are needed and will be listed:
 * Signature: to enable your app to use the eSignature API.
 * Impersonation: to enable your app to impersonate the user.
 
-As discussed in the [OAuth Authorization Code Grant][1], the user should
+As discussed in the [OAuth Authorization Code Grant][1] documentation, the user should
 format the URL as follows:
 
 ````
