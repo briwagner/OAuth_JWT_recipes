@@ -244,7 +244,7 @@ Requesting an access token by using a JWT token...done.
 
 C O N S E N T   R E Q U I R E D
 Ask the user who will be impersonated to run the following url:
-    https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=8dd0204d-d969-4097-b121-f4bc77b81a44&redirect_uri=https://docusign.com
+    https://account-d.docusign.com/oauth/auth?response_type=code&scope=signature%20impersonation&client_id=8dd0204d-d969-xx&redirect_uri=https://docusign.com
 
 It will ask the user to login and to approve access by your application.
 $
