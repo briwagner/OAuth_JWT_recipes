@@ -159,8 +159,8 @@ permissions (scopes) are needed and will be listed:
 * Signature: to enable your app to use the eSignature API.
 * Impersonation: to enable your app to impersonate the user.
 
-As discussed in the [OAuth Authorization Code Grant][1] documentation, the user should
-format the URL as follows:
+As discussed in the [OAuth Authorization Code Grant][1] documentation, the
+URL is formatted as follows:
 
 ````
 SERVER/oauth/auth?response_type=code&scope=signature%20impersonate
@@ -180,6 +180,9 @@ the DocuSign Administration tool.
 We recommend that your application create the URL for the user
 and ask them to enter it into a browser. This is how the
 recipes in this repo work.
+
+If the user is not immediately available, your
+app could email the URL to the user.
 
 This screen shot shows DocuSign asking the user to grant the
 **two** permissions to the application:
@@ -210,11 +213,10 @@ Run the file from a shell:
 
 ## Command Line JWT recipe
 
-The following sections discuss how to install and test
+This section discusses how to install and test
 the command line JWT recipe. Its files are in directory
 **command_line**
 
-### Installation
 1. Install the [jwtgen](https://github.com/vandium-io/jwtgen) command line JWT generator.
    It requires node.
 
@@ -223,6 +225,8 @@ the command line JWT recipe. Its files are in directory
 
    `jwtgen --help`
 
+1. Python must also be installed on your machine.
+
 3. Clone this repo to your local machine.
 
 4. Create an integration key as discussed above.
@@ -230,7 +234,7 @@ the command line JWT recipe. Its files are in directory
    Store the private key in the file **keys/docusign_private_key.txt**
 5. Use a text editor to update the settings in the recipe's script
    file, **create_envelope.sh**
-1. Execute the file from your shell.
+1. Execute the file from your shell: <br />**% ./create_envelope.sh**
 1. For each new user_id, the script will provide a url for
    granting access. See below:
 
