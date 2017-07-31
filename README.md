@@ -238,7 +238,7 @@ Run the file from a shell:
 **% php create_envelope.php**
 
 
-# Command Line JWT recipe
+# Command Line JWT Recipe
 The **/command_line** directory includes a
 bash script
 that also uses OAuth JWT to send an envelope.
