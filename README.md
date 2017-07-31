@@ -220,9 +220,9 @@ The PHP script has been tested on a Mac and Windows.
    Save the file in your PHP installation folder. Eg, save it as `c:\php\cacert.pem`
 1. Open your php.ini file and update these lines:
 
-   curl.cainfo = "C:\php\cacert-2017-06-07.pem"
+   curl.cainfo = "C:\php\cacert.pem"
 
-   openssl.cafile= "C:\php\cacert-2017-06-07.pem"
+   openssl.cafile= "C:\php\cacert.pem"
 
 
 ## Running the script
