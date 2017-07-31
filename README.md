@@ -197,9 +197,35 @@ grant consent to your app.
 In this case, the individual users do not have to take
 any action for the app to act on their behalf.
 
-## PHP JWT recipe
+# PHP JWT Command Line Recipe
 
-The **php** directory includes a PHP JWT example.
+The **/php** directory includes a PHP JWT example.
+
+## Installation
+
+The PHP script has been tested on a Mac and Windows.
+
+### Installing the recipe on Windows
+
+1. Install PHP
+1. Open php.ini file and uncomment the following lines:
+
+   extension_dir = "ext"
+
+   extension=php_curl.dll
+
+   extension=php_openssl.dll
+1. Download the standard set of trusted root certificates: The [cacert.pem file](http://curl.haxx.se/docs/caextract.html).
+
+   Save the file in your PHP installation folder. Eg, save it as `c:\php\cacert.pem`
+1. Open your php.ini file and update these lines:
+
+   curl.cainfo = "C:\php\cacert-2017-06-07.pem"
+
+   openssl.cafile= "C:\php\cacert-2017-06-07.pem"
+
+
+## Running the script
 
 The recipe is designed to be used from the command line, not as
 a web script. No web server is needed to try the script.
@@ -211,11 +237,13 @@ Run the file from a shell:
 
 **% php create_envelope.php**
 
-## Command Line JWT recipe
 
-This section discusses how to install and test
-the command line JWT recipe. Its files are in directory
-**command_line**
+# Command Line JWT recipe
+The **/command_line** directory includes a
+bash script
+that also uses OAuth JWT to send an envelope.
+
+## Installation
 
 1. Install the [jwtgen](https://github.com/vandium-io/jwtgen) command line JWT generator.
    It requires node.
