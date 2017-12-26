@@ -1,0 +1,64 @@
+{
+  "documents": [
+    {
+      "documentId": "1",
+      "name": "Agreement & test",
+      "fileExtension": "html",
+      "documentBase64": null
+    }
+  ],
+  "notification": {
+    "expirations": {
+      "expireAfter": "1",
+      "expireEnabled": "true",
+      "expireWarn": "0"
+    }
+  },
+  "emailSubject": "NewCo agreement for signature",
+  "status": "sent",
+  "recipients": {
+    "signers": [
+      {
+        "recipientId": "1",
+        "name": null,
+        "email": null,
+        "routingOrder": "1",
+        "tabs": {
+          "signHereTabs": [
+            {
+              "optional": "false",
+              "recipientId": "1",
+              "anchorString": "signer1sig",
+              "anchorYOffset": "-7",
+              "name": "Please sign here",
+              "tabLabel": "signer1sig"
+            }
+          ],
+          "fullNameTabs": [
+            {
+              "anchorString": "signer1name",
+              "anchorUnits": "pixels",
+              "anchorYOffset": "-7",
+              "fontSize": "Size12",
+              "tabLabel": "Full Name",
+              "name": "Full Name",
+              "recipientId": "1"
+            }],
+          "textTabs": [
+            {
+              "anchorString": "signer1city",
+              "anchorUnits": "pixels",
+              "anchorYOffset": "-7",
+              "fontSize": "Size12",
+              "tabLabel": "City",
+              "name": "City",
+              "recipientId": "1",
+              "value": "London",
+              "locked": "false"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

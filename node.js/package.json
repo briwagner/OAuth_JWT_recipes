@@ -1,0 +1,29 @@
+{
+  "name": "node.js",
+  "version": "1.0.0",
+  "description": "OAuth JWT Test",
+  "main": "jwt_test.js",
+  "scripts": {
+    "test": "node  --inspect --debug-brk jwt_test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docusign/OAuth_JWT_recipes.git"
+  },
+  "author": "Larry Kluger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/docusign/OAuth_JWT_recipes/issues"
+  },
+  "homepage": "https://github.com/docusign/OAuth_JWT_recipes#readme",
+  "dependencies": {
+    "colors": "^1.1.2",
+    "fs": "0.0.1-security",
+    "jsonwebtoken": "^8.1.0",
+    "lodash": "^4.17.4",
+    "moment": "^2.19.3",
+    "node-ask": "^1.0.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
+  }
+}
