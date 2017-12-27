@@ -14,9 +14,9 @@ var request = require('request')
 const // FILL THESE IN...
       CLIENT_ID = ''  // Also known as: integration key
     , USER_GUID = '' // Can't use an email here. Sorry.
-      // Only used for Grant Permission step instructions: 
+      // Only used for Grant Permission step instructions:
     , USER_EMAIL = ''
-    , REGISTERED_REDIRECT_URI = 'https://docusign.com'
+    , REGISTERED_REDIRECT_URI = 'https://www.docusign.com'
     ;
 
 
