@@ -1,7 +1,9 @@
 # OAuth_JWT_recipes
 Recipes for Service Integration authentications via the OAuth JWT flow.
 
-Php and command line examples are included in this repo.
+Node.JS, PHP, and command line examples are included in this repo.
+
+You can watch a [screencast discussing the JWT flow and demonstrating the Node.JS example.][jwt_screencast]
 
 ## Information Security
 Note! In the following sections we will be updating files to include
@@ -197,6 +199,29 @@ grant consent to your app.
 In this case, the individual users do not have to take
 any action for the app to act on their behalf.
 
+# Node.JS JWT Command Line Recipe
+
+The **/node.js** directory includes a Node.JS JWT example.
+
+## Installation
+
+1. Install Node.JS and npm
+1. Download this Git repository. cd to the node.js directory
+1. Complete the following steps as shown in the [screencast.][jwt_screencast]
+1. Run the `npm install` command to install the needed libraries
+1. Add your Integration Key to the `private_key.txt` file.
+1. Configure the `jwt_test.js` app with your Integration Key and
+   the guid for the user who will be impersonated.
+1. Make the `jwt_test.js` file executable if need be: `chmod +x jwt_test.js`
+
+## Running the script
+
+The recipe is designed to be used from the command line, not as
+a web script. No web server is needed to try the script.
+
+Run the file from a shell:
+**% ./jwt_test.js**
+
 # PHP JWT Command Line Recipe
 
 The **/php** directory includes a PHP JWT example.
@@ -287,3 +312,4 @@ The command_line script has been tested on a Macintosh using a bash shell. Pull 
 All software supplied by pull requests must be licensed under the MIT License.
 
 [1]:https://docs.docusign.com/esign/guide/authentication/oa2_auth_code.html
+[jwt_screencast]:https://docusign.wistia.com/medias/g0fl213lwy
