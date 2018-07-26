@@ -16,7 +16,7 @@ require_once 'vendor/autoload.php'; # http://unirest.io/php.html
 //  1. Open the USERS AND GROUPS/Users screen
 //  2. Edit the user
 //  3. The field "API Username" is the user's user_id
-$sub="[user_id]"; // user's user_id -- email: sue@example.com
+$sub="[user_id]"; // user's user_id
 // Integrator key (client_id)
 $iss="[integration key]";
 // The authentication server address. Either account.docusign.com or account-d.docusign.com
